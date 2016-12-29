@@ -16,7 +16,9 @@
 }
 
 .table.stats td.wide-range {
-  width: 100px
+  width: 300px;
+  text-align: left;
+  padding-left:3px;
 }
 .prime-checker {
   width: 300px;

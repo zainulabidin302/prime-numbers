@@ -7,4 +7,8 @@ Here are some of the questions which I want to know.
 
   * Is there any range, inside which it is gauranteed to have a prime ? for example if we have a and b any arbitrary numbers, can we have a
     max constant b-a such that we will always find a prime before before we reach next prime number (prime number + (b-a)).
-  * 
+  *
+
+
+	* My claim is x, y: such that x and y are primes and y > x then (y - x < c)
+     where c is (is suspect 10)

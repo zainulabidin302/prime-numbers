@@ -24,27 +24,48 @@ var isPrime = function(n) {
     p = getNextPrime(p+1)
   return p == n
 }
+var why = function (n) {
+  var str = ""
+  if (n % 2 == 0)
+    str = ", Because " + n + " is even."
+  else if (n % 3)
+    str = ", Because " + n + " is divisible by 3."
+  else if (n % 7)
+    str = ", Because " + n + " is divisible by 7."
+  else if (n % 9)
+    str = ", Because " + n + " is divisible by 9."
+
+  document.getElementById('result-div').innerHTML += str
+}
 var checkIsPrime = function () {
   var p = isPrime(parseInt(document.getElementById('is-prime').value))
-  document.getElementById('result-div').innerHTML = p == true ? 'YES' : 'NO'
+  document.getElementById('result-div').innerHTML = p == true ? 'YES' : 'NO <a href="javascript:why('+ document.getElementById('is-prime').value +')"  >Why?</a>';
 }
 
-var generateTable = function(n, row_size) {
+var generateTable = function(start, end, row_size) {
+
   var row_counter = 1
-  var row_size    = row_size || 10
-  var n           = n || 100
+  var row_size    = row_size || 20
+
+  var starting_prime          = start || 0
+  var ending_prime           = end || st + 100
+
+  if (starting_prime >= ending_prime) {
+    st          = 0
+    n           = 100
+  }
+
   var ending_with = []
   var a = 1
   var b = 0
-  var data_interval = 10
+  var data_interval = 5
   var data_splits = []
   var diff   = function (a, b) {
     return b - a
   }
   var st = "<table class='table'>"
-
-  for (var i = getNextPrime(0); i < n; i = getNextPrime(++i)) {
-
+  var trail_of_primes = []
+  for (var i = getNextPrime(starting_prime); i < ending_prime; i = getNextPrime(++i)) {
     if (row_counter == 1) {
       st += "<tr>"
     }
@@ -53,9 +74,11 @@ var generateTable = function(n, row_size) {
     if (diff(a, b) > data_interval) {
       var tmp = JSON.stringify(ending_with)
       tmp = JSON.parse(tmp)
-      tmp.unshift(a+"-"+b)
+      //tmp.unshift(a+"-"+b)
+      tmp.unshift(trail_of_primes.join(','))
       data_splits.push(JSON.stringify(tmp))
       a = b
+      trail_of_primes = []
     }
 
     st += "<td>" + i + "</td>"
@@ -66,6 +89,7 @@ var generateTable = function(n, row_size) {
     }
     row_counter++
     b = i
+    trail_of_primes.push(i)
   }
   st += '</table>'
 
